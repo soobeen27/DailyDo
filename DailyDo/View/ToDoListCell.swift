@@ -1,0 +1,140 @@
+//
+//  ToDoListCell.swift
+//  DailyDo
+//
+//  Created by Soo Jang on 2023/06/19.
+//
+
+import UIKit
+import SnapKit
+
+class ToDoListCell: UITableViewCell {
+    
+    var sampleModel: SampleModel? {
+        didSet{
+            setData()
+        }
+    }
+    
+    lazy var toDoView: UIView = {
+        let view = UIView()
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 10
+        view.backgroundColor = .systemGray6
+        return view
+    }()
+    
+    lazy var toDoTextLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16,weight: .bold)
+        label.textColor = .label
+        label.text = "sample text"
+        label.numberOfLines = 0
+        label.setContentHuggingPriority(UILayoutPriority(1000), for: .vertical)
+        return label
+    }()
+    
+    lazy var toDoCycleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = .secondaryLabel
+        label.text = "sample secondary text"
+        return label
+    }()
+    
+    lazy var doneBtnView: UIView = {
+        let view = UIView()
+        view.addSubview(toDoDoneBtn)
+        return view
+    }()
+    
+    lazy var toDoDoneBtn: UIButton = {
+        
+        var attrStr = AttributedString.init("완료")
+        attrStr.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        attrStr.foregroundColor = .secondaryLabel
+        
+        
+        var configuration = UIButton.Configuration.tinted()
+        configuration.attributedTitle = attrStr
+        
+        let btn = UIButton(configuration: configuration)
+        btn.tintColor = .black
+        btn.addTarget(self, action: #selector(doneBtnPressed), for: .touchUpInside)
+        return btn
+    }()
+    
+    lazy var labelStView: UIStackView = {
+        let st = UIStackView(arrangedSubviews: [toDoTextLabel, toDoCycleLabel])
+        st.spacing = 10
+        st.axis = .vertical
+        st.alignment = .fill
+        return st
+    }()
+    
+    lazy var toDoStView: UIStackView = {
+        let st = UIStackView(arrangedSubviews: [labelStView,doneBtnView])
+        st.spacing = 15
+        st.axis = .horizontal
+        st.alignment = .fill
+        return st
+    }()
+    
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        // Configure the view for the selected state
+    }
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: .default, reuseIdentifier: reuseIdentifier)
+        setLayout()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    @objc func doneBtnPressed() {
+        print("done btn pressed")
+    }
+    
+    func setData() {
+        toDoTextLabel.text = sampleModel?.toDoText
+        toDoCycleLabel.text = sampleModel?.toDoCycle
+    }
+    
+    func setLayout() {
+        contentView.addSubview(toDoView)
+        toDoView.addSubview(toDoStView)
+        
+        toDoView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(10)
+            make.bottom.equalToSuperview().offset(-10)
+            make.leading.equalToSuperview().offset(25)
+            make.trailing.equalToSuperview().offset(-25)
+        }
+        
+        doneBtnView.snp.makeConstraints {
+            $0.width.equalTo(60)
+        }
+        
+        
+        
+        toDoDoneBtn.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: 60, height: 60))
+                                make.center.equalToSuperview()
+        }
+        
+        toDoStView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20)
+            make.bottom.equalToSuperview().offset(-20)
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
+        }
+        
+    }
+    
+}
