@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         setNav()
         setTableView()
         setLayout()
@@ -58,6 +58,9 @@ class ViewController: UIViewController {
     
     @objc func addBtnPressed() {
         print("add btn pressed")
+        let addToDoVC = AddToDoViewController()
+        addToDoVC.modalPresentationStyle = .automatic
+        present(addToDoVC, animated: true)
     }
     
     func setLayout() {

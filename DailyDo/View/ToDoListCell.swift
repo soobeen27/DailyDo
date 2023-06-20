@@ -20,7 +20,7 @@ class ToDoListCell: UITableViewCell {
         let view = UIView()
         view.clipsToBounds = true
         view.layer.cornerRadius = 10
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = .secondarySystemBackground
         return view
     }()
     
@@ -129,10 +129,10 @@ class ToDoListCell: UITableViewCell {
         }
         
         toDoStView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
-            make.bottom.equalToSuperview().offset(-20)
-            make.leading.equalToSuperview().offset(10)
-            make.trailing.equalToSuperview().offset(-10)
+            make.top.equalToSuperview().offset(15)
+            make.bottom.equalToSuperview().offset(-15)
+            make.leading.equalToSuperview().offset(15)
+            make.trailing.equalToSuperview().offset(-15)
         }
         
     }

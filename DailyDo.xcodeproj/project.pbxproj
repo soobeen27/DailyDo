@@ -20,6 +20,8 @@
 		F4C490882A408C6C009D6B74 /* ToDoListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C490872A408C6C009D6B74 /* ToDoListCell.swift */; };
 		F4C4908D2A40B980009D6B74 /* SampleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C4908C2A40B980009D6B74 /* SampleModel.swift */; };
 		F4C4908F2A40C380009D6B74 /* AddToDoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C4908E2A40C380009D6B74 /* AddToDoViewController.swift */; };
+		F4C490912A4207F6009D6B74 /* SetTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C490902A4207F6009D6B74 /* SetTimeCell.swift */; };
+		F4C490932A423B09009D6B74 /* SetCycleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C490922A423B09009D6B74 /* SetCycleVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		F4C490872A408C6C009D6B74 /* ToDoListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListCell.swift; sourceTree = "<group>"; };
 		F4C4908C2A40B980009D6B74 /* SampleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleModel.swift; sourceTree = "<group>"; };
 		F4C4908E2A40C380009D6B74 /* AddToDoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToDoViewController.swift; sourceTree = "<group>"; };
+		F4C490902A4207F6009D6B74 /* SetTimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTimeCell.swift; sourceTree = "<group>"; };
+		F4C490922A423B09009D6B74 /* SetCycleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCycleVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				F4C490872A408C6C009D6B74 /* ToDoListCell.swift */,
+				F4C490902A4207F6009D6B74 /* SetTimeCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -180,6 +185,7 @@
 			children = (
 				F4AC471B2A407C9B00C771DB /* ViewController.swift */,
 				F4C4908E2A40C380009D6B74 /* AddToDoViewController.swift */,
+				F4C490922A423B09009D6B74 /* SetCycleVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -359,7 +365,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4C490932A423B09009D6B74 /* SetCycleVC.swift in Sources */,
 				F4AC471C2A407C9B00C771DB /* ViewController.swift in Sources */,
+				F4C490912A4207F6009D6B74 /* SetTimeCell.swift in Sources */,
 				F4C4908D2A40B980009D6B74 /* SampleModel.swift in Sources */,
 				F4AC47182A407C9B00C771DB /* AppDelegate.swift in Sources */,
 				F4AC471A2A407C9B00C771DB /* SceneDelegate.swift in Sources */,
