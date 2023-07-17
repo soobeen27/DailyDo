@@ -7,21 +7,21 @@
 
 import UIKit
 
-class AddToDoViewController: UIViewController {
-    
-    let leftLabel = ["반복 주기", "첫번째 알림", "두번째 알림"]
-    let rightLabel = ["매일", "09:30", "20:00"]
-    
+class AddAlarmVC: UIViewController {
+        
     private let tableView = UITableView()
     
-    lazy var toDoTextView: UITextView = {
+    let dataManager = CoreDataManager()
+    
+    
+    lazy var alarmTextView: UITextView = {
         let textView = UITextView()
         textView.backgroundColor = .secondarySystemBackground
         textView.layer.cornerRadius = 10
         textView.isScrollEnabled = false
         textView.textContainer.maximumNumberOfLines = 5
         
-        textView.text = "내용을 입력해 주세요."
+        textView.text = addAlram.insertMessage
         textView.textColor = .secondaryLabel
         textView.textContainerInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
         textView.font = UIFont.systemFont(ofSize: 16)
@@ -36,7 +36,7 @@ class AddToDoViewController: UIViewController {
     
     lazy var cancelBtn: UIButton = {
         
-        var attrStr = AttributedString.init("취소")
+        var attrStr = AttributedString.init(addAlram.cancel)
         attrStr.font = .systemFont(ofSize: 18)
         attrStr.foregroundColor = .systemBlue
         
@@ -49,7 +49,7 @@ class AddToDoViewController: UIViewController {
     }()
     
     lazy var addBtn: UIButton = {
-        var attrStr = AttributedString.init("추가")
+        var attrStr = AttributedString.init(addAlram.add)
         attrStr.font = .systemFont(ofSize: 18, weight: .semibold)
         attrStr.foregroundColor = .systemBlue
         
@@ -57,21 +57,35 @@ class AddToDoViewController: UIViewController {
         btnConf.attributedTitle = attrStr
         
         let btn = UIButton(configuration: btnConf)
+        btn.addTarget(self, action: #selector(addBtnHit(_:)), for: .touchUpInside)
         return btn
     }()
+    
+    lazy var testBtn: UIButton = {
+        var attrStr = AttributedString.init(addAlram.add)
+        attrStr.font = .systemFont(ofSize: 18, weight: .semibold)
+        attrStr.foregroundColor = .systemBlue
+        
+        var btnConf = UIButton.Configuration.plain()
+        btnConf.attributedTitle = attrStr
+        
+        let btn = UIButton(configuration: btnConf)
+        btn.addTarget(self, action: #selector(addBtnHit(_:)), for: .touchUpInside)
+        return btn
+    }()
+    
     
     lazy var setTimeView: UIView = {
        let view = UIView()
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
-//        view.backgroundColor = .secondarySystemBackground
         view.addSubview(tableView)
         return view
     }()
     
     
     lazy var tfAndPvSV: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [toDoTextView, setTimeView])
+        let sv = UIStackView(arrangedSubviews: [alarmTextView, setTimeView])
         sv.axis = .vertical
         sv.distribution = .fill
         sv.spacing = 30
@@ -80,7 +94,7 @@ class AddToDoViewController: UIViewController {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "알림 추가"
+        label.text = addAlram.addAlarm
         label.textColor = .label
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         return label
@@ -94,6 +108,10 @@ class AddToDoViewController: UIViewController {
         return view
     }()
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.post(name: NSNotification.Name(nfcentre.name), object: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,12 +129,23 @@ class AddToDoViewController: UIViewController {
 //        tableView.backgroundColor = .secondarySystemBackground
         
         tableView.rowHeight = 40
-        tableView.register(SetTimeCell.self, forCellReuseIdentifier: "SetTimeCell")
+        tableView.register(SetTimeCell.self, forCellReuseIdentifier: cellIdentifier.setTime)
+    }
+    
+    @objc func addBtnHit(_ sender: UIButton!) {
+        print("add btn hit")
+        
+        var data = Memo(isFirst: true, cycle: 0, firstTime: 0, secondTime: 0, memoText: alarmTextView.text, date: Date())
+        data.isFirst = false
+        dataManager.insertMemo(data)
+        print(data)
+        dismiss(animated: true)
     }
     
     func setLayout() {
         view.addSubview(tfAndPvSV)
         view.addSubview(titleAndBtnView)
+        view.addSubview(testBtn)
         
         
         titleAndBtnView.snp.makeConstraints {
@@ -140,7 +169,7 @@ class AddToDoViewController: UIViewController {
             $0.center.equalToSuperview()
         }
         
-        toDoTextView.snp.makeConstraints {
+        alarmTextView.snp.makeConstraints {
             $0.height.equalTo(150)
         }
         
@@ -158,15 +187,31 @@ class AddToDoViewController: UIViewController {
             $0.edges.equalTo(setTimeView)
         }
         
+        testBtn.snp.makeConstraints {
+            $0.top.equalTo(tableView.snp.bottom).offset(30)
+            $0.centerX.equalToSuperview()
+        }
+        
     }
     
 }
 
-extension AddToDoViewController: UITableViewDelegate {
-    
+extension AddAlarmVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            let vc = SetCycleVC()
+            navigationController?.pushViewController(vc, animated: true)
+
+        }
+//        else {
+//            let vc = SetTimeVC()
+//            vc.modalPresentationStyle = .automatic
+//            present(vc, animated: true)
+//        }
+    }
 }
 
-extension AddToDoViewController: UITableViewDataSource {
+extension AddAlarmVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
@@ -174,14 +219,14 @@ extension AddToDoViewController: UITableViewDataSource {
 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SetTimeCell", for: indexPath) as! SetTimeCell
-        cell.leftLabel.text = leftLabel[indexPath.row]
-        cell.rightLabel.text = rightLabel[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier.setTime, for: indexPath) as! SetTimeCell
+        cell.leftLabel.text = addAlram.cellLeftLabel[indexPath.row]
+        cell.rightLabel.text = addAlram.cellRightLabel[indexPath.row]
         return cell
     }
 }
 
-extension AddToDoViewController: UITextViewDelegate {
+extension AddAlarmVC: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == .secondaryLabel {
@@ -192,7 +237,7 @@ extension AddToDoViewController: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
-            textView.text = "내용을 입력해주세요."
+            textView.text = addAlram.insertMessage
             textView.textColor = .secondaryLabel
         }
     }

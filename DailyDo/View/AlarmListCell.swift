@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-class ToDoListCell: UITableViewCell {
+class AlarmListCell: UITableViewCell {
     
-    var sampleModel: SampleModel? {
+    var memo: Memo? {
         didSet{
             setData()
         }
@@ -102,8 +102,8 @@ class ToDoListCell: UITableViewCell {
     }
     
     func setData() {
-        toDoTextLabel.text = sampleModel?.toDoText
-        toDoCycleLabel.text = sampleModel?.toDoCycle
+        toDoTextLabel.text = memo?.memoText ?? ""
+        toDoCycleLabel.text = cycleText.days[Int(memo?.cycle ?? 0)]
     }
     
     func setLayout() {
