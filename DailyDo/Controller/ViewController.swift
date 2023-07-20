@@ -84,13 +84,15 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataManager.getMemo().count
+//        return dataManager.getMemo().count
+        return dataManager.getMemoListFromCoreData().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier.alarmList, for: indexPath) as! AlarmListCell
         cell.selectionStyle = .none
-        cell.memo = dataManager.getMemo()[indexPath.row]
+//        cell.memo = dataManager.getMemo()[indexPath.row]
+        cell.memoEntity = dataManager.getMemoListFromCoreData()[indexPath.row]
         return cell
     }
     

@@ -23,7 +23,7 @@ enum country {
 }
 
 enum cycleText {
-    static let days = ["1일마다","2일마다","3일마다","4일마다","5일마다","6일마다","7일마다"]
+    static let days = ["매일","2일마다","3일마다","4일마다","5일마다","6일마다","7일마다"]
 }
 
 enum addAlram {

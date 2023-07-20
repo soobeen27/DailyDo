@@ -8,11 +8,14 @@
 import UIKit
 
 class AddAlarmVC: UIViewController {
-        
+    
     private let tableView = UITableView()
     
-    let dataManager = CoreDataManager()
+    let dataManager = CoreDataManager.shared
     
+    var memoData: MemoEntity?
+    
+    var cycle: Int16 = 0
     
     lazy var alarmTextView: UITextView = {
         let textView = UITextView()
@@ -48,7 +51,7 @@ class AddAlarmVC: UIViewController {
         return btn
     }()
     
-    lazy var addBtn: UIButton = {
+    lazy var saveBtn: UIButton = {
         var attrStr = AttributedString.init(addAlram.add)
         attrStr.font = .systemFont(ofSize: 18, weight: .semibold)
         attrStr.foregroundColor = .systemBlue
@@ -57,7 +60,7 @@ class AddAlarmVC: UIViewController {
         btnConf.attributedTitle = attrStr
         
         let btn = UIButton(configuration: btnConf)
-        btn.addTarget(self, action: #selector(addBtnHit(_:)), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(saveBtnHit(_:)), for: .touchUpInside)
         return btn
     }()
     
@@ -70,13 +73,13 @@ class AddAlarmVC: UIViewController {
         btnConf.attributedTitle = attrStr
         
         let btn = UIButton(configuration: btnConf)
-        btn.addTarget(self, action: #selector(addBtnHit(_:)), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(saveBtnHit(_:)), for: .touchUpInside)
         return btn
     }()
     
     
     lazy var setTimeView: UIView = {
-       let view = UIView()
+        let view = UIView()
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
         view.addSubview(tableView)
@@ -104,7 +107,7 @@ class AddAlarmVC: UIViewController {
         let view = UIView()
         view.addSubview(cancelBtn)
         view.addSubview(titleLabel)
-        view.addSubview(addBtn)
+        view.addSubview(saveBtn)
         return view
     }()
     
@@ -126,22 +129,27 @@ class AddAlarmVC: UIViewController {
     func setTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-//        tableView.backgroundColor = .secondarySystemBackground
+        //        tableView.backgroundColor = .secondarySystemBackground
         
         tableView.rowHeight = 40
         tableView.register(SetTimeCell.self, forCellReuseIdentifier: cellIdentifier.setTime)
     }
     
-    @objc func addBtnHit(_ sender: UIButton!) {
+    @objc func saveBtnHit(_ sender: UIButton!) {
         print("add btn hit")
-        
-        var data = Memo(isFirst: true, cycle: 0, firstTime: 0, secondTime: 0, memoText: alarmTextView.text, date: Date())
-        data.isFirst = false
-        dataManager.insertMemo(data)
-        print(data)
-        dismiss(animated: true)
+        if let data = memoData {
+            data.memo = alarmTextView.text
+            dataManager.updateMemo(newMemoEntity: data) {
+                self.dismiss(animated: true)
+            }
+        } else {
+            let newText = alarmTextView.text
+            dataManager.saveMemoEntity(memoText: newText, memoCycle: cycle, firstTime: "0800", secondTime: "2200", isFirst: true) {
+                self.dismiss(animated: true)
+            }
+        }
     }
-    
+//MARK: Layout setting
     func setLayout() {
         view.addSubview(tfAndPvSV)
         view.addSubview(titleAndBtnView)
@@ -160,7 +168,7 @@ class AddAlarmVC: UIViewController {
             $0.leading.equalToSuperview()
         }
         
-        addBtn.snp.makeConstraints {
+        saveBtn.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.trailing.equalToSuperview()
         }
@@ -195,19 +203,21 @@ class AddAlarmVC: UIViewController {
     }
     
 }
+//MARK: UITableViewDelegate
 
 extension AddAlarmVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
             let vc = SetCycleVC()
+            vc.delegate = self
             navigationController?.pushViewController(vc, animated: true)
-
+            
         }
-//        else {
-//            let vc = SetTimeVC()
-//            vc.modalPresentationStyle = .automatic
-//            present(vc, animated: true)
-//        }
+        //        else {
+        //            let vc = SetTimeVC()
+        //            vc.modalPresentationStyle = .automatic
+        //            present(vc, animated: true)
+        //        }
     }
 }
 
@@ -216,15 +226,21 @@ extension AddAlarmVC: UITableViewDataSource {
         return 3
     }
     
-
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier.setTime, for: indexPath) as! SetTimeCell
         cell.leftLabel.text = addAlram.cellLeftLabel[indexPath.row]
-        cell.rightLabel.text = addAlram.cellRightLabel[indexPath.row]
+        if indexPath.row == 0 {
+            cell.rightLabel.text = cycleText.days[Int(cycle)]
+        } else {
+            cell.rightLabel.text = addAlram.cellRightLabel[indexPath.row]
+        }
         return cell
     }
 }
+
+//MARK: UITextViewDelegate
 
 extension AddAlarmVC: UITextViewDelegate {
     
@@ -240,5 +256,17 @@ extension AddAlarmVC: UITextViewDelegate {
             textView.text = addAlram.insertMessage
             textView.textColor = .secondaryLabel
         }
+    }
+}
+//MARK: Delegate Protocol
+protocol UpdateCycle: AnyObject {
+    func updateCycle(_ cycle: Int16)
+}
+
+extension AddAlarmVC: UpdateCycle {
+    func updateCycle(_ cycle: Int16) {
+        self.cycle = cycle
+        print(self.cycle)
+        self.tableView.reloadData()
     }
 }

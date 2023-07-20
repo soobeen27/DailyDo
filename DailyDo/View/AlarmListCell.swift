@@ -10,7 +10,7 @@ import SnapKit
 
 class AlarmListCell: UITableViewCell {
     
-    var memo: Memo? {
+    var memoEntity: MemoEntity? {
         didSet{
             setData()
         }
@@ -34,7 +34,7 @@ class AlarmListCell: UITableViewCell {
         return label
     }()
     
-    lazy var toDoCycleLabel: UILabel = {
+    lazy var alarmCycleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .secondaryLabel
@@ -65,7 +65,7 @@ class AlarmListCell: UITableViewCell {
     }()
     
     lazy var labelStView: UIStackView = {
-        let st = UIStackView(arrangedSubviews: [toDoTextLabel, toDoCycleLabel])
+        let st = UIStackView(arrangedSubviews: [toDoTextLabel, alarmCycleLabel])
         st.spacing = 10
         st.axis = .vertical
         st.alignment = .fill
@@ -102,8 +102,8 @@ class AlarmListCell: UITableViewCell {
     }
     
     func setData() {
-        toDoTextLabel.text = memo?.memoText ?? ""
-        toDoCycleLabel.text = cycleText.days[Int(memo?.cycle ?? 0)]
+        toDoTextLabel.text = memoEntity?.memo ?? ""
+        alarmCycleLabel.text = cycleText.days[Int(memoEntity?.cycle ?? 0)]
     }
     
     func setLayout() {

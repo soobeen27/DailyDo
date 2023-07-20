@@ -8,10 +8,10 @@
 import UIKit
 
 class SetCycleVC: UIViewController {
-    
-//    private let cycle = ["1일마다","2일마다","3일마다","4일마다","5일마다","6일마다","7일마다"]
 
     private let tableView = UITableView()
+        
+    var delegate: UpdateCycle?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +50,22 @@ class SetCycleVC: UIViewController {
 
 
 extension SetCycleVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        cell.accessoryType = .checkmark
+        delegate?.updateCycle(Int16(indexPath.row))
+        
+        if let wholeIndexPath = tableView.indexPathsForVisibleRows {
+            for cellPath in wholeIndexPath{
+               if cellPath == indexPath{
+                   continue
+               }
+                tableView.cellForRow(at: cellPath)!.accessoryType = .none
+            }
+        }
+        
+        
+    }
     
 }
 extension SetCycleVC: UITableViewDataSource {
@@ -62,8 +78,10 @@ extension SetCycleVC: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier.cycle, for: indexPath) as! CycleCell
 //        cell.cycleLabel.text = cycle[indexPath.row]
         cell.cycleLabel.text = cycleText.days[indexPath.row]
+        cell.accessoryType = cell.isSelected ? .checkmark : .none
         return cell
     }
     
     
 }
+
