@@ -10,6 +10,8 @@ import SnapKit
 
 class AlarmListCell: UITableViewCell {
     
+    weak var delegate: DoneBtnDelegate?
+    
     var memoEntity: MemoEntity? {
         didSet{
             setData()
@@ -44,11 +46,11 @@ class AlarmListCell: UITableViewCell {
     
     lazy var doneBtnView: UIView = {
         let view = UIView()
-        view.addSubview(toDoDoneBtn)
+        view.addSubview(doneBtn)
         return view
     }()
     
-    lazy var toDoDoneBtn: UIButton = {
+    lazy var doneBtn: UIButton = {
         
         var attrStr = AttributedString.init("완료")
         attrStr.font = UIFont.systemFont(ofSize: 16, weight: .bold)
@@ -60,7 +62,7 @@ class AlarmListCell: UITableViewCell {
         
         let btn = UIButton(configuration: configuration)
         btn.tintColor = .black
-        btn.addTarget(self, action: #selector(doneBtnPressed), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(doneBtnHit), for: .touchUpInside)
         return btn
     }()
     
@@ -96,14 +98,16 @@ class AlarmListCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    @objc func doneBtnPressed() {
-        print("done btn pressed")
+    //MARK: DoneBtn target func
+    @objc func doneBtnHit() {
+        print("done btn hit")
+        delegate?.toggleDoneBtn(indexPath: tag)
+        
     }
     
     func setData() {
         toDoTextLabel.text = memoEntity?.memo ?? ""
-        alarmCycleLabel.text = cycleText.days[Int(memoEntity?.cycle ?? 0)]
+        alarmCycleLabel.text = CycleText.days[Int(memoEntity?.cycle ?? 0)]
     }
     
     func setLayout() {
@@ -123,7 +127,7 @@ class AlarmListCell: UITableViewCell {
         
         
         
-        toDoDoneBtn.snp.makeConstraints { make in
+        doneBtn.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 60, height: 60))
                                 make.center.equalToSuperview()
         }

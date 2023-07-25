@@ -2,40 +2,45 @@
 //  SetTimeCell.swift
 //  DailyDo
 //
-//  Created by Soo Jang on 2023/06/21.
+//  Created by Soo Jang on 2023/07/20.
 //
 
 import UIKit
 
 class SetTimeCell: UITableViewCell {
-
+    
+    weak var delegate: DatePickerDelegate?
+    
     lazy var leftLabel: UILabel = {
        let label = UILabel()
         label.font = .systemFont(ofSize: 16)
-        label.text = "알림 주기"
+        label.text = "첫번째 알림"
         return label
     }()
     
-    lazy var rightLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
-        label.textColor = .secondaryLabel
-        label.text = "매일"
-        return label
-    }()
-    
-    lazy var rightImg: UIImageView = {
-        let iv = UIImageView()
-        iv.image = UIImage(systemName: "chevron.forward")
-        iv.tintColor = .secondaryLabel
-        iv.frame.size = CGSize(width: 16, height: 16)
-        return iv
+    lazy var timePicker: UIDatePicker = {
+        let dp = UIDatePicker()
+        dp.datePickerMode = .time
+        dp.preferredDatePickerStyle = .compact
+        dp.setValue(UIColor.secondaryLabel, forKeyPath: "textColor")
+        dp.setValue(false, forKeyPath: "highlightsToday")
+        dp.subviews.first?.subviews.forEach { grayView in
+            let view = UIView()
+            view.translatesAutoresizingMaskIntoConstraints = false
+            view.backgroundColor = .secondarySystemBackground
+            grayView.insertSubview(view, at: 0)
+            view.topAnchor.constraint(equalTo: grayView.safeAreaLayoutGuide.topAnchor).isActive = true
+            view.bottomAnchor.constraint(equalTo: grayView.safeAreaLayoutGuide.bottomAnchor).isActive = true
+            view.leadingAnchor.constraint(equalTo: grayView.safeAreaLayoutGuide.leadingAnchor).isActive = true
+            view.trailingAnchor.constraint(equalTo: grayView.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        }
+        dp.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+        
+        return dp
     }()
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -48,10 +53,14 @@ class SetTimeCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setLayout() {
+    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
+        delegate?.datePickerValueChanged(self, selectedDate: sender.date)
+    }
+    
+    private func setLayout() {
         contentView.addSubview(leftLabel)
-        contentView.addSubview(rightLabel)
-        contentView.addSubview(rightImg)
+        contentView.addSubview(timePicker)
+//        contentView.addSubview(chevronImg)
         
         
         leftLabel.snp.makeConstraints {
@@ -59,15 +68,11 @@ class SetTimeCell: UITableViewCell {
             $0.centerY.equalToSuperview()
         }
         
-        rightLabel.snp.makeConstraints {
-            $0.trailing.equalTo(rightImg.snp.leading).offset(-5)
+        timePicker.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-10)
             $0.centerY.equalToSuperview()
-        }
-        
-        rightImg.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-15)
-            $0.centerY.equalToSuperview()
+            $0.top.equalToSuperview().offset(0)
+            $0.bottom.equalToSuperview().offset(0)
         }
     }
-    
 }

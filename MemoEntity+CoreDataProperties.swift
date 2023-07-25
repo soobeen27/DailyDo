@@ -22,6 +22,7 @@ extension MemoEntity {
     @NSManaged public var memo: String?
     @NSManaged public var secondTime: String?
     @NSManaged public var date: Date?
+    @NSManaged public var isDone: Bool
     
     var dateString: String? {
         let myFormatter = DateFormatter()

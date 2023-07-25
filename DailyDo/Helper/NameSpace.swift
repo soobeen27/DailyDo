@@ -7,27 +7,28 @@
 
 import Foundation
 
-enum cellIdentifier{
+enum CellIdentifier{
     static let alarmList = "alarmListCell"
+    static let setCycle = "setCycleCell"
     static let setTime = "setTimeCell"
     static let cycle = "CycleCell"
 }
 
-enum nfcentre {
+enum Nfcentre {
     static let name = "DismissAddAlarmVC"
 }
 
 
-enum country {
+enum Country {
     static let korea = "ko-KR"
 }
 
-enum cycleText {
+enum CycleText {
     static let days = ["매일","2일마다","3일마다","4일마다","5일마다","6일마다","7일마다"]
 }
 
-enum addAlram {
-    static let cellLeftLabel = ["반복 주기", "첫번째 알림", "두번째 알림"]
+enum AddAlram {
+    static let cellLeftLabel = ["첫번째 알림", "두번째 알림"]
     static let cellRightLabel = ["매일", "09:30", "20:00"]
     
     static let insertMessage = "내용을 입력해주세요."
@@ -36,6 +37,8 @@ enum addAlram {
     static let add = "추가"
 }
 
-enum dailyDo {
+enum DailyDo {
     static let title = "DailyDo"
 }
+
+

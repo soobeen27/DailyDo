@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		B3781EEDFEB1AC8E96430AB0 /* Pods_DailyDo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE0198935066D03D90DC6429 /* Pods_DailyDo.framework */; };
 		F435C3A42A4C701600780BF8 /* CoredataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F435C3A22A4C701600780BF8 /* CoredataModel.xcdatamodeld */; };
-		F435C3A62A4F0E6800780BF8 /* SetTimeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F435C3A52A4F0E6800780BF8 /* SetTimeVC.swift */; };
 		F435C3A82A559ECB00780BF8 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F435C3A72A559ECB00780BF8 /* CoreDataManager.swift */; };
 		F435C3AB2A5C1A7C00780BF8 /* NameSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = F435C3AA2A5C1A7C00780BF8 /* NameSpace.swift */; };
 		F435C3B52A66ADF400780BF8 /* MemoEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F435C3B32A66ADF400780BF8 /* MemoEntity+CoreDataClass.swift */; };
@@ -29,9 +28,14 @@
 		F4AC473B2A407C9E00C771DB /* DailyDoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AC473A2A407C9E00C771DB /* DailyDoUITestsLaunchTests.swift */; };
 		F4C490882A408C6C009D6B74 /* AlarmListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C490872A408C6C009D6B74 /* AlarmListCell.swift */; };
 		F4C4908F2A40C380009D6B74 /* AddAlarmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C4908E2A40C380009D6B74 /* AddAlarmVC.swift */; };
-		F4C490912A4207F6009D6B74 /* SetTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C490902A4207F6009D6B74 /* SetTimeCell.swift */; };
+		F4C490912A4207F6009D6B74 /* SetCycleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C490902A4207F6009D6B74 /* SetCycleCell.swift */; };
 		F4C490932A423B09009D6B74 /* SetCycleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C490922A423B09009D6B74 /* SetCycleVC.swift */; };
 		F4C490952A448D78009D6B74 /* CycleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C490942A448D78009D6B74 /* CycleCell.swift */; };
+		F4DB6B032A695668001556D7 /* SetTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB6B022A695668001556D7 /* SetTimeCell.swift */; };
+		F4DB6B052A696843001556D7 /* CellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB6B042A696843001556D7 /* CellModel.swift */; };
+		F4DB6B072A6FF6E3001556D7 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB6B062A6FF6E3001556D7 /* extensions.swift */; };
+		F4DB6B092A7016C1001556D7 /* CustomDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB6B082A7016C1001556D7 /* CustomDelegates.swift */; };
+		F4DB6B0B2A702615001556D7 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB6B0A2A702615001556D7 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +60,6 @@
 		2926D0F96BA610DF44CC1E8B /* Pods-DailyDo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DailyDo.release.xcconfig"; path = "Target Support Files/Pods-DailyDo/Pods-DailyDo.release.xcconfig"; sourceTree = "<group>"; };
 		BE0198935066D03D90DC6429 /* Pods_DailyDo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DailyDo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F435C3A32A4C701600780BF8 /* CoredataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoredataModel.xcdatamodel; sourceTree = "<group>"; };
-		F435C3A52A4F0E6800780BF8 /* SetTimeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTimeVC.swift; sourceTree = "<group>"; };
 		F435C3A72A559ECB00780BF8 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		F435C3AA2A5C1A7C00780BF8 /* NameSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameSpace.swift; sourceTree = "<group>"; };
 		F435C3B32A66ADF400780BF8 /* MemoEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemoEntity+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
@@ -76,9 +79,14 @@
 		F4AC473A2A407C9E00C771DB /* DailyDoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyDoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F4C490872A408C6C009D6B74 /* AlarmListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListCell.swift; sourceTree = "<group>"; };
 		F4C4908E2A40C380009D6B74 /* AddAlarmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlarmVC.swift; sourceTree = "<group>"; };
-		F4C490902A4207F6009D6B74 /* SetTimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTimeCell.swift; sourceTree = "<group>"; };
+		F4C490902A4207F6009D6B74 /* SetCycleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCycleCell.swift; sourceTree = "<group>"; };
 		F4C490922A423B09009D6B74 /* SetCycleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCycleVC.swift; sourceTree = "<group>"; };
 		F4C490942A448D78009D6B74 /* CycleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleCell.swift; sourceTree = "<group>"; };
+		F4DB6B022A695668001556D7 /* SetTimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetTimeCell.swift; sourceTree = "<group>"; };
+		F4DB6B042A696843001556D7 /* CellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellModel.swift; sourceTree = "<group>"; };
+		F4DB6B062A6FF6E3001556D7 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
+		F4DB6B082A7016C1001556D7 /* CustomDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDelegates.swift; sourceTree = "<group>"; };
+		F4DB6B0A2A702615001556D7 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +136,10 @@
 			isa = PBXGroup;
 			children = (
 				F435C3AA2A5C1A7C00780BF8 /* NameSpace.swift */,
+				F4DB6B042A696843001556D7 /* CellModel.swift */,
+				F4DB6B062A6FF6E3001556D7 /* extensions.swift */,
+				F4DB6B082A7016C1001556D7 /* CustomDelegates.swift */,
+				F4DB6B0A2A702615001556D7 /* Colors.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -203,7 +215,8 @@
 			isa = PBXGroup;
 			children = (
 				F4C490872A408C6C009D6B74 /* AlarmListCell.swift */,
-				F4C490902A4207F6009D6B74 /* SetTimeCell.swift */,
+				F4C490902A4207F6009D6B74 /* SetCycleCell.swift */,
+				F4DB6B022A695668001556D7 /* SetTimeCell.swift */,
 				F4C490942A448D78009D6B74 /* CycleCell.swift */,
 			);
 			path = View;
@@ -215,7 +228,6 @@
 				F4AC471B2A407C9B00C771DB /* ViewController.swift */,
 				F4C4908E2A40C380009D6B74 /* AddAlarmVC.swift */,
 				F4C490922A423B09009D6B74 /* SetCycleVC.swift */,
-				F435C3A52A4F0E6800780BF8 /* SetTimeVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -396,15 +408,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4C490932A423B09009D6B74 /* SetCycleVC.swift in Sources */,
-				F435C3A62A4F0E6800780BF8 /* SetTimeVC.swift in Sources */,
 				F4AC471C2A407C9B00C771DB /* ViewController.swift in Sources */,
 				F435C3A42A4C701600780BF8 /* CoredataModel.xcdatamodeld in Sources */,
 				F435C3B52A66ADF400780BF8 /* MemoEntity+CoreDataClass.swift in Sources */,
-				F4C490912A4207F6009D6B74 /* SetTimeCell.swift in Sources */,
+				F4C490912A4207F6009D6B74 /* SetCycleCell.swift in Sources */,
 				F435C3A82A559ECB00780BF8 /* CoreDataManager.swift in Sources */,
 				F4AC47182A407C9B00C771DB /* AppDelegate.swift in Sources */,
+				F4DB6B0B2A702615001556D7 /* Colors.swift in Sources */,
 				F4AC471A2A407C9B00C771DB /* SceneDelegate.swift in Sources */,
+				F4DB6B032A695668001556D7 /* SetTimeCell.swift in Sources */,
+				F4DB6B092A7016C1001556D7 /* CustomDelegates.swift in Sources */,
 				F4C4908F2A40C380009D6B74 /* AddAlarmVC.swift in Sources */,
+				F4DB6B052A696843001556D7 /* CellModel.swift in Sources */,
+				F4DB6B072A6FF6E3001556D7 /* extensions.swift in Sources */,
 				F435C3B82A66ADF400780BF8 /* MemoEntity+CoreDataProperties.swift in Sources */,
 				F4C490952A448D78009D6B74 /* CycleCell.swift in Sources */,
 				F435C3AB2A5C1A7C00780BF8 /* NameSpace.swift in Sources */,

@@ -28,7 +28,7 @@ class SetCycleVC: UIViewController {
         tableView.layer.cornerRadius = 10
         
         
-        tableView.register(CycleCell.self, forCellReuseIdentifier: cellIdentifier.cycle)
+        tableView.register(CycleCell.self, forCellReuseIdentifier: CellIdentifier.cycle)
     }
     
     func setLayout() {
@@ -71,13 +71,13 @@ extension SetCycleVC: UITableViewDelegate {
 extension SetCycleVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return cycle.count
-        return cycleText.days.count
+        return CycleText.days.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier.cycle, for: indexPath) as! CycleCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.cycle, for: indexPath) as! CycleCell
 //        cell.cycleLabel.text = cycle[indexPath.row]
-        cell.cycleLabel.text = cycleText.days[indexPath.row]
+        cell.cycleLabel.text = CycleText.days[indexPath.row]
         cell.accessoryType = cell.isSelected ? .checkmark : .none
         return cell
     }

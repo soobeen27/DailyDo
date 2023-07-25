@@ -29,7 +29,7 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(self.didDismissDetailNotification(_:)),
-            name: NSNotification.Name(nfcentre.name),
+            name: NSNotification.Name(Nfcentre.name),
             object: nil
         )
         
@@ -46,18 +46,17 @@ class ViewController: UIViewController {
         
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.prefersLargeTitles = true
-        title = dailyDo.title
+        title = DailyDo.title
         
         navigationItem.rightBarButtonItem = self.addBtn
     }
     
     func setTableView() {
         tableView.dataSource = self
-        tableView.delegate = self
         
         tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 80
-        tableView.register(AlarmListCell.self, forCellReuseIdentifier: cellIdentifier.alarmList)
+        tableView.register(AlarmListCell.self, forCellReuseIdentifier: CellIdentifier.alarmList)
         
     }
     
@@ -89,16 +88,25 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier.alarmList, for: indexPath) as! AlarmListCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.alarmList, for: indexPath) as! AlarmListCell
         cell.selectionStyle = .none
 //        cell.memo = dataManager.getMemo()[indexPath.row]
+        cell.delegate = self
+        cell.tag = indexPath.row
         cell.memoEntity = dataManager.getMemoListFromCoreData()[indexPath.row]
         return cell
     }
     
     
 }
-extension ViewController: UITableViewDelegate {
-    
+
+extension ViewController: DoneBtnDelegate {
+    func toggleDoneBtn(indexPath: Int) {
+        let newData = dataManager.getMemoListFromCoreData()[indexPath]
+        newData.isDone.toggle()
+        dataManager.updateMemo(newMemoEntity: newData) {
+            self.tableView.reloadData()
+        }
+    }
 }
 

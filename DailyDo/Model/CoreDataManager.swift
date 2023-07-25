@@ -61,6 +61,7 @@ final class CoreDataManager {
                     memoEntity.firstTime = firstTime
                     memoEntity.secondTime = secondTime
                     memoEntity.isFirst = isFirst
+                    memoEntity.isDone = false
                     
                     
                     //appDelegate?.saveContext() // 앱델리게이트의 메서드로 해도됨
