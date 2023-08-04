@@ -9,19 +9,12 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    
-    let sampleModel : [SampleModel] = [
-        SampleModel(toDoText: "운동하기@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", toDoCycle: "3일마다"),
-        SampleModel(toDoText: "공부하기", toDoCycle: "매일"),
-        SampleModel(toDoText: "빨래하기", toDoCycle: "일주일에 한번"),
-        SampleModel(toDoText: "산책하기@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2", toDoCycle: "이틀마다")
-    ]
-    
+    let dataManager = CoreDataManager.shared
     
     private let tableView = UITableView()
     
     lazy var addBtn: UIBarButtonItem = {
-        let btn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBtnPressed))
+        let btn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBtnHit))
         btn.tintColor = .label
         return btn
     }()
@@ -32,35 +25,47 @@ class ViewController: UIViewController {
         setNav()
         setTableView()
         setLayout()
-        // Do any additional setup after loading the view.
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.didDismissDetailNotification(_:)),
+            name: NSNotification.Name(Nfcentre.name),
+            object: nil
+        )
+        
+    }
+    @objc func didDismissDetailNotification(_ notification: Notification) {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     func setNav() {
         let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()  // 투명으로
+        appearance.configureWithTransparentBackground()
         
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.prefersLargeTitles = true
-        title = "DailyDo"
+        title = DailyDo.title
         
         navigationItem.rightBarButtonItem = self.addBtn
     }
     
     func setTableView() {
         tableView.dataSource = self
-        tableView.delegate = self
         
         tableView.separatorStyle = .none
         tableView.estimatedRowHeight = 80
-        tableView.register(ToDoListCell.self, forCellReuseIdentifier: "ToDoListCell")
+        tableView.register(AlarmListCell.self, forCellReuseIdentifier: CellIdentifier.alarmList)
         
     }
     
-    @objc func addBtnPressed() {
+    @objc func addBtnHit() {
         print("add btn pressed")
-        let addToDoVC = AddToDoViewController()
-        addToDoVC.modalPresentationStyle = .automatic
-        present(addToDoVC, animated: true)
+        let addAlarmVC = AddAlarmVC()
+        let navigationController = UINavigationController(rootViewController: addAlarmVC)
+        navigationController.modalPresentationStyle = .automatic
+        present(navigationController, animated: true)
     }
     
     func setLayout() {
@@ -78,19 +83,31 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sampleModel.count
+//        return dataManager.getMemo().count
+        return dataManager.getMemoListFromCoreData().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoListCell", for: indexPath) as! ToDoListCell
-        cell.sampleModel = sampleModel[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.alarmList, for: indexPath) as! AlarmListCell
         cell.selectionStyle = .none
+//        cell.memo = dataManager.getMemo()[indexPath.row]
+        cell.delegate = self
+        cell.tag = indexPath.row
+        cell.memoEntity = dataManager.getMemoListFromCoreData()[indexPath.row]
         return cell
     }
     
     
 }
-extension ViewController: UITableViewDelegate {
-    
+
+extension ViewController: DoneBtnDelegate {
+    func toggleDoneBtn(indexPath: Int) {
+        let newData = dataManager.getMemoListFromCoreData()[indexPath]
+        newData.isDone.toggle()
+        print(newData.isDone)
+        dataManager.updateMemo(newMemoEntity: newData) {
+            self.tableView.reloadData()
+        }
+    }
 }
 

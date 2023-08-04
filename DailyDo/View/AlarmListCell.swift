@@ -8,11 +8,14 @@
 import UIKit
 import SnapKit
 
-class ToDoListCell: UITableViewCell {
+class AlarmListCell: UITableViewCell {
     
-    var sampleModel: SampleModel? {
+    weak var delegate: DoneBtnDelegate?
+    
+    var memoEntity: MemoEntity? {
         didSet{
             setData()
+            setIsDoneBtn(doneBtn)
         }
     }
     
@@ -34,7 +37,7 @@ class ToDoListCell: UITableViewCell {
         return label
     }()
     
-    lazy var toDoCycleLabel: UILabel = {
+    lazy var alarmCycleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .secondaryLabel
@@ -44,28 +47,27 @@ class ToDoListCell: UITableViewCell {
     
     lazy var doneBtnView: UIView = {
         let view = UIView()
-        view.addSubview(toDoDoneBtn)
+        view.addSubview(doneBtn)
         return view
     }()
     
-    lazy var toDoDoneBtn: UIButton = {
-        
-        var attrStr = AttributedString.init("완료")
+    lazy var doneBtn: UIButton = {
+        var attrStr =  AttributedString.init("오류")
         attrStr.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        attrStr.foregroundColor = .secondaryLabel
+        attrStr.foregroundColor = .label
         
         
         var configuration = UIButton.Configuration.tinted()
         configuration.attributedTitle = attrStr
         
         let btn = UIButton(configuration: configuration)
-        btn.tintColor = .black
-        btn.addTarget(self, action: #selector(doneBtnPressed), for: .touchUpInside)
+        btn.tintColor = .white
+        btn.addTarget(self, action: #selector(doneBtnHit(_:)), for: .touchUpInside)
         return btn
     }()
     
     lazy var labelStView: UIStackView = {
-        let st = UIStackView(arrangedSubviews: [toDoTextLabel, toDoCycleLabel])
+        let st = UIStackView(arrangedSubviews: [toDoTextLabel, alarmCycleLabel])
         st.spacing = 10
         st.axis = .vertical
         st.alignment = .fill
@@ -96,14 +98,29 @@ class ToDoListCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    @objc func doneBtnPressed() {
-        print("done btn pressed")
+    //MARK: DoneBtn target func
+    @objc func doneBtnHit(_ sender: UIButton) {
+        print("done btn hit")
+        delegate?.toggleDoneBtn(indexPath: tag)
+        
+        setIsDoneBtn(sender)
+        
     }
     
+    func setIsDoneBtn(_ sender: UIButton) {
+        if let isDone = memoEntity?.isDone {
+            var attrStr = isDone ? AttributedString.init("완료") : AttributedString.init("미완")
+            attrStr.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+            attrStr.foregroundColor = isDone ? .secondaryLabel : .label
+            sender.configuration?.attributedTitle = attrStr
+            sender.tintColor = isDone ? .completeColour : .incompleteColour
+        }
+    }
+    
+    
     func setData() {
-        toDoTextLabel.text = sampleModel?.toDoText
-        toDoCycleLabel.text = sampleModel?.toDoCycle
+        toDoTextLabel.text = memoEntity?.memo ?? ""
+        alarmCycleLabel.text = CycleText.days[Int(memoEntity?.cycle ?? 0)]
     }
     
     func setLayout() {
@@ -123,9 +140,9 @@ class ToDoListCell: UITableViewCell {
         
         
         
-        toDoDoneBtn.snp.makeConstraints { make in
+        doneBtn.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 60, height: 60))
-                                make.center.equalToSuperview()
+            make.center.equalToSuperview()
         }
         
         toDoStView.snp.makeConstraints { make in
