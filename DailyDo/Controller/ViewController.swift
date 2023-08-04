@@ -104,6 +104,7 @@ extension ViewController: DoneBtnDelegate {
     func toggleDoneBtn(indexPath: Int) {
         let newData = dataManager.getMemoListFromCoreData()[indexPath]
         newData.isDone.toggle()
+        print(newData.isDone)
         dataManager.updateMemo(newMemoEntity: newData) {
             self.tableView.reloadData()
         }

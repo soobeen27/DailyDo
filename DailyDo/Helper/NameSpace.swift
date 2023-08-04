@@ -37,6 +37,12 @@ enum AddAlram {
     static let add = "추가"
 }
 
+enum DoneBtn {
+    static let isDone = ["미완","완료"]
+    
+}
+
+
 enum DailyDo {
     static let title = "DailyDo"
 }

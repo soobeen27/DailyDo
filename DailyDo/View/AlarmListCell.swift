@@ -15,6 +15,7 @@ class AlarmListCell: UITableViewCell {
     var memoEntity: MemoEntity? {
         didSet{
             setData()
+            setIsDoneBtn(doneBtn)
         }
     }
     
@@ -51,18 +52,17 @@ class AlarmListCell: UITableViewCell {
     }()
     
     lazy var doneBtn: UIButton = {
-        
-        var attrStr = AttributedString.init("완료")
+        var attrStr =  AttributedString.init("오류")
         attrStr.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        attrStr.foregroundColor = .secondaryLabel
+        attrStr.foregroundColor = .label
         
         
         var configuration = UIButton.Configuration.tinted()
         configuration.attributedTitle = attrStr
         
         let btn = UIButton(configuration: configuration)
-        btn.tintColor = .black
-        btn.addTarget(self, action: #selector(doneBtnHit), for: .touchUpInside)
+        btn.tintColor = .white
+        btn.addTarget(self, action: #selector(doneBtnHit(_:)), for: .touchUpInside)
         return btn
     }()
     
@@ -99,11 +99,24 @@ class AlarmListCell: UITableViewCell {
     }
     
     //MARK: DoneBtn target func
-    @objc func doneBtnHit() {
+    @objc func doneBtnHit(_ sender: UIButton) {
         print("done btn hit")
         delegate?.toggleDoneBtn(indexPath: tag)
         
+        setIsDoneBtn(sender)
+        
     }
+    
+    func setIsDoneBtn(_ sender: UIButton) {
+        if let isDone = memoEntity?.isDone {
+            var attrStr = isDone ? AttributedString.init("완료") : AttributedString.init("미완")
+            attrStr.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+            attrStr.foregroundColor = isDone ? .secondaryLabel : .label
+            sender.configuration?.attributedTitle = attrStr
+            sender.tintColor = isDone ? .completeColour : .incompleteColour
+        }
+    }
+    
     
     func setData() {
         toDoTextLabel.text = memoEntity?.memo ?? ""
@@ -129,7 +142,7 @@ class AlarmListCell: UITableViewCell {
         
         doneBtn.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 60, height: 60))
-                                make.center.equalToSuperview()
+            make.center.equalToSuperview()
         }
         
         toDoStView.snp.makeConstraints { make in

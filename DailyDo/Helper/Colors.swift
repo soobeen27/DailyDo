@@ -7,19 +7,8 @@
 
 import UIKit
 
-enum Colors: String {
-    
-    case complete = "complete"
-    case incomplete = "incomplete"
-    var doneBtnBackground: UIColor {
-        switch self {
-        case .complete:
-            return UIColor.blue
-        case .incomplete:
-            return UIColor.black
-        }
-        
-    }
+extension UIColor {
+    class var completeColour: UIColor? {UIColor(named: "CompleteColour")}
+    class var incompleteColour: UIColor? {UIColor(named: "IncompleteColour")}
 }
-
 
