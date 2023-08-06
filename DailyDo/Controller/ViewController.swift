@@ -13,16 +13,46 @@ class ViewController: UIViewController {
     
     private let tableView = UITableView()
     
-    lazy var addBtn: UIBarButtonItem = {
-        let btn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBtnHit))
+    private let titleBtnViewHeight = UIScreen.main.bounds.size.height/10
+    
+    lazy var addBtn: UIButton = {
+//        var attrStr = AttributedString.init(AddAlram.add)
+//        attrStr.font = .systemFont(ofSize: 18, weight: .semibold)
+//        attrStr.foregroundColor = .label
+        
+//        var btnConf = UIButton.Configuration.plain()
+        var btnConf = UIButton.Configuration.plain()
+        btnConf.image = UIImage(systemName: "plus")
+        btnConf.imagePadding = 10
+        btnConf.imagePlacement = .all
+        
+        
+        let btn = UIButton(configuration: btnConf)
         btn.tintColor = .label
+        btn.addTarget(self, action: #selector(addBtnHit), for: .touchUpInside)
         return btn
     }()
+    
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = DailyDo.title
+        label.font = UIFont.systemFont(ofSize: 35, weight: .bold)
+        label.textColor = .label
+        return label
+    }()
+    
+    lazy var titleBtnView: UIView = {
+        let v = UIView()
+        v.addSubview(addBtn)
+        v.addSubview(titleLabel)
+        return v
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        setNav()
+//        setNav()
         setTableView()
         setLayout()
         
@@ -40,16 +70,16 @@ class ViewController: UIViewController {
         }
     }
     
-    func setNav() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        
-        navigationController?.navigationBar.tintColor = .black
-        navigationController?.navigationBar.prefersLargeTitles = true
-        title = DailyDo.title
-        
-        navigationItem.rightBarButtonItem = self.addBtn
-    }
+//    func setNav() {
+//        let appearance = UINavigationBarAppearance()
+//        appearance.configureWithTransparentBackground()
+//
+//        navigationController?.navigationBar.tintColor = .black
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//        title = DailyDo.title
+//
+//        navigationItem.rightBarButtonItem = self.addBtn
+//    }
     
     func setTableView() {
         tableView.dataSource = self
@@ -67,12 +97,32 @@ class ViewController: UIViewController {
         navigationController.modalPresentationStyle = .automatic
         present(navigationController, animated: true)
     }
-    
+    //MARK: Layout Setting
     func setLayout() {
         view.addSubview(tableView)
+        view.addSubview(titleBtnView)
+
+        titleBtnView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(15)
+            $0.trailing.equalToSuperview().offset(-10)
+            $0.leading.equalToSuperview().offset(10)
+            $0.height.equalTo(titleBtnViewHeight)
+        }
+        
+        addBtn.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(10)
+//            $0.centerY.equalToSuperview()
+            $0.top.equalToSuperview()
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+//            $0.centerY.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
         
         tableView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
+            make.top.equalTo(titleBtnView.snp.bottom).offset(10)
             make.bottom.equalToSuperview()
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
