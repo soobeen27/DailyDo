@@ -45,6 +45,7 @@ enum DoneBtn {
 
 enum DailyDo {
     static let title = "DailyDo"
+    static let addAlarmVCTitle = "알림 추가"
 }
 
 
