@@ -29,9 +29,6 @@ class AddAlarmVC: UIViewController {
     var firstTime: Date?
     var secondTime: Date?
     
-//    lazy var firstTime = UIDatePicker()
-    
-    
     lazy var alarmTextView: UITextView = {
         let textView = UITextView()
         textView.backgroundColor = .secondarySystemBackground
@@ -52,46 +49,17 @@ class AddAlarmVC: UIViewController {
         return pv
     }()
     
-    lazy var cancelBtn: UIButton = {
-        
-        var attrStr = AttributedString.init(AddAlram.cancel)
-        attrStr.font = .systemFont(ofSize: 18)
-        attrStr.foregroundColor = .systemBlue
-        
-        var btnConf = UIButton.Configuration.plain()
-        btnConf.attributedTitle = attrStr
-        
-        let btn = UIButton(configuration: btnConf)
-        
+    lazy var saveBtn: UIBarButtonItem = {
+        let btn = UIBarButtonItem(title: AddAlram.add, style: .plain, target: self, action: #selector(saveBtnHit(_:)))
+        btn.tintColor = .subLabelColour
         return btn
     }()
     
-    lazy var saveBtn: UIButton = {
-        var attrStr = AttributedString.init(AddAlram.add)
-        attrStr.font = .systemFont(ofSize: 18, weight: .semibold)
-        attrStr.foregroundColor = .systemBlue
-        
-        var btnConf = UIButton.Configuration.plain()
-        btnConf.attributedTitle = attrStr
-        
-        let btn = UIButton(configuration: btnConf)
-        btn.addTarget(self, action: #selector(saveBtnHit(_:)), for: .touchUpInside)
+    lazy var cancelBtn: UIBarButtonItem = {
+        let btn = UIBarButtonItem(title: AddAlram.cancel, style: .plain, target: self, action: #selector(cancelBtnHit))
+        btn.tintColor = .subLabelColour
         return btn
     }()
-    
-    lazy var testBtn: UIButton = {
-        var attrStr = AttributedString.init(AddAlram.add)
-        attrStr.font = .systemFont(ofSize: 18, weight: .semibold)
-        attrStr.foregroundColor = .systemBlue
-        
-        var btnConf = UIButton.Configuration.plain()
-        btnConf.attributedTitle = attrStr
-        
-        let btn = UIButton(configuration: btnConf)
-        btn.addTarget(self, action: #selector(saveBtnHit(_:)), for: .touchUpInside)
-        return btn
-    }()
-    
     
     lazy var setTimeView: UIView = {
         let view = UIView()
@@ -109,23 +77,7 @@ class AddAlarmVC: UIViewController {
         sv.spacing = 30
         return sv
     }()
-    
-    lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = AddAlram.addAlarm
-        label.textColor = .label
-        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        return label
-    }()
-    
-    lazy var titleAndBtnView: UIView = {
-        let view = UIView()
-        view.addSubview(cancelBtn)
-        view.addSubview(titleLabel)
-        view.addSubview(saveBtn)
-        return view
-    }()
-    
+        
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.post(name: NSNotification.Name(Nfcentre.name), object: nil)
@@ -137,9 +89,9 @@ class AddAlarmVC: UIViewController {
         tableView.delegate = self
         
         view.backgroundColor = .systemBackground
-//        setTableView()
         setLayout()
         refresh()
+        setNav()
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
@@ -163,11 +115,28 @@ class AddAlarmVC: UIViewController {
             }
         }
     }
+    @objc func cancelBtnHit() {
+        self.dismiss(animated: true)
+    }
+    
+    //MARK: NavigationController Setting
+    func setNav() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        
+        navigationController?.navigationBar.tintColor = .subLabelColour
+        navigationController?.navigationBar.prefersLargeTitles = false
+        title = AddAlram.title
+    
+        navigationItem.rightBarButtonItem = self.saveBtn
+        navigationItem.leftBarButtonItem = self.cancelBtn
+    }
+    
     
     //MARK: TableView data setting
     private func refresh() {
       self.dataSource = [
-        .setCycle(leftLabel: "반복 주기", rightLabel: CycleText.days[Int(cycle)]),
+        .setCycle(leftLabel: AddAlram.cycleTerm, rightLabel: CycleText.days[Int(cycle)]),
         .setTime(leftLabel: AddAlram.cellLeftLabel[0]),
         .setTime(leftLabel: AddAlram.cellLeftLabel[0])
     
@@ -178,31 +147,7 @@ class AddAlarmVC: UIViewController {
     //MARK: Layout setting
     func setLayout() {
         view.addSubview(tfAndPvSV)
-        view.addSubview(titleAndBtnView)
-        view.addSubview(testBtn)
-        
-        
-        titleAndBtnView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(15)
-            $0.leading.equalToSuperview().offset(10)
-            $0.trailing.equalToSuperview().offset(-10)
-            $0.height.equalTo(cancelBtn.snp.height)
-        }
-        
-        cancelBtn.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview()
-        }
-        
-        saveBtn.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.trailing.equalToSuperview()
-        }
-        
-        titleLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
-        }
-        
+
         alarmTextView.snp.makeConstraints {
             $0.height.equalTo(150)
         }
@@ -212,7 +157,7 @@ class AddAlarmVC: UIViewController {
         }
         
         tfAndPvSV.snp.makeConstraints {
-            $0.top.equalTo(cancelBtn.snp.bottom).offset(40)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(40)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
         }
@@ -220,12 +165,6 @@ class AddAlarmVC: UIViewController {
         tableView.snp.makeConstraints {
             $0.edges.equalTo(setTimeView)
         }
-        
-        testBtn.snp.makeConstraints {
-            $0.top.equalTo(tableView.snp.bottom).offset(30)
-            $0.centerX.equalToSuperview()
-        }
-        
     }
     
 }

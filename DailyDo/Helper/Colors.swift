@@ -10,5 +10,6 @@ import UIKit
 extension UIColor {
     class var completeColour: UIColor? {UIColor(named: "CompleteColour")}
     class var incompleteColour: UIColor? {UIColor(named: "IncompleteColour")}
+    class var subLabelColour: UIColor? {UIColor.label}
 }
 

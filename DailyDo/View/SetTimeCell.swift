@@ -20,6 +20,7 @@ class SetTimeCell: UITableViewCell {
     
     lazy var timePicker: UIDatePicker = {
         let dp = UIDatePicker()
+        dp.tintColor = .label
         dp.datePickerMode = .time
         dp.preferredDatePickerStyle = .compact
         dp.setValue(UIColor.secondaryLabel, forKeyPath: "textColor")
@@ -60,8 +61,6 @@ class SetTimeCell: UITableViewCell {
     private func setLayout() {
         contentView.addSubview(leftLabel)
         contentView.addSubview(timePicker)
-//        contentView.addSubview(chevronImg)
-        
         
         leftLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(15)

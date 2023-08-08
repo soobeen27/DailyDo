@@ -39,12 +39,12 @@ class ViewController: UIViewController {
             self.tableView.reloadData()
         }
     }
-    
+    //MARK: NavigationController Setting
     func setNav() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
         
-        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.tintColor = UIColor.subLabelColour
         navigationController?.navigationBar.prefersLargeTitles = true
         title = DailyDo.title
         
