@@ -32,9 +32,10 @@ enum AddAlram {
     static let cellRightLabel = ["매일", "09:30", "20:00"]
     
     static let insertMessage = "내용을 입력해주세요."
-    static let addAlarm = "알람 추가"
+    static let title = "알람 추가"
     static let cancel = "취소"
     static let add = "추가"
+    static let cycleTerm = "반복 주기"
 }
 
 enum DoneBtn {

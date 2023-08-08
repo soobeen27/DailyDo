@@ -69,6 +69,7 @@ class ViewController: UIViewController {
             self.tableView.reloadData()
         }
     }
+<<<<<<< HEAD
     
 //    func setNav() {
 //        let appearance = UINavigationBarAppearance()
@@ -80,6 +81,19 @@ class ViewController: UIViewController {
 //
 //        navigationItem.rightBarButtonItem = self.addBtn
 //    }
+=======
+    //MARK: NavigationController Setting
+    func setNav() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        
+        navigationController?.navigationBar.tintColor = UIColor.subLabelColour
+        navigationController?.navigationBar.prefersLargeTitles = true
+        title = DailyDo.title
+        
+        navigationItem.rightBarButtonItem = self.addBtn
+    }
+>>>>>>> presentPush
     
     func setTableView() {
         tableView.dataSource = self
