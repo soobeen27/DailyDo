@@ -9,7 +9,7 @@ import UIKit
 
 class AddAlarmVC: UIViewController {
     
-    //    private let tableView = UITableView()
+//    private let tableView = UITableView()
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.rowHeight = 40
@@ -77,7 +77,7 @@ class AddAlarmVC: UIViewController {
         sv.spacing = 30
         return sv
     }()
-    
+        
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.post(name: NSNotification.Name(Nfcentre.name), object: nil)
@@ -96,8 +96,8 @@ class AddAlarmVC: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
-    
-    //MARK: Save Button Hit func
+
+//MARK: Save Button Hit func
     @objc func saveBtnHit(_ sender: UIButton!) {
         print("add btn hit")
         
@@ -124,22 +124,6 @@ class AddAlarmVC: UIViewController {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
         
-        navigationController?.navigationBar.tintColor = .black
-        navigationController?.navigationBar.prefersLargeTitles = true
-        title = DailyDo.addAlarmVCTitle
-        
-//        navigationItem.rightBarButtonItem = self.addBtn
-    }
-    
-    //MARK: TableView data setting
-    private func refresh() {
-        self.dataSource = [
-            .setCycle(leftLabel: "반복 주기", rightLabel: CycleText.days[Int(cycle)]),
-            .setTime(leftLabel: AddAlram.cellLeftLabel[0]),
-            .setTime(leftLabel: AddAlram.cellLeftLabel[0])
-            
-        ]
-        self.tableView.reloadData()
         navigationController?.navigationBar.tintColor = .subLabelColour
         navigationController?.navigationBar.prefersLargeTitles = false
         title = AddAlram.title
@@ -148,9 +132,22 @@ class AddAlarmVC: UIViewController {
         navigationItem.leftBarButtonItem = self.cancelBtn
     }
     
+    
+    //MARK: TableView data setting
+    private func refresh() {
+      self.dataSource = [
+        .setCycle(leftLabel: AddAlram.cycleTerm, rightLabel: CycleText.days[Int(cycle)]),
+        .setTime(leftLabel: AddAlram.cellLeftLabel[0]),
+        .setTime(leftLabel: AddAlram.cellLeftLabel[0])
+    
+      ]
+      self.tableView.reloadData()
+    }
+    
     //MARK: Layout setting
     func setLayout() {
         view.addSubview(tfAndPvSV)
+
         alarmTextView.snp.makeConstraints {
             $0.height.equalTo(150)
         }
@@ -164,6 +161,7 @@ class AddAlarmVC: UIViewController {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
         }
+        
         tableView.snp.makeConstraints {
             $0.edges.equalTo(setTimeView)
         }
