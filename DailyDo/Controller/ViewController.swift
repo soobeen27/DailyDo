@@ -15,40 +15,6 @@ class ViewController: UIViewController {
     
     private let titleBtnViewHeight = UIScreen.main.bounds.size.height/10
     
-    lazy var addBtn: UIButton = {
-//        var attrStr = AttributedString.init(AddAlram.add)
-//        attrStr.font = .systemFont(ofSize: 18, weight: .semibold)
-//        attrStr.foregroundColor = .label
-        
-//        var btnConf = UIButton.Configuration.plain()
-        var btnConf = UIButton.Configuration.plain()
-        btnConf.image = UIImage(systemName: "plus")
-        btnConf.imagePadding = 10
-        btnConf.imagePlacement = .all
-        
-        
-        let btn = UIButton(configuration: btnConf)
-        btn.tintColor = .label
-        btn.addTarget(self, action: #selector(addBtnHit), for: .touchUpInside)
-        return btn
-    }()
-    
-    lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = DailyDo.title
-        label.font = UIFont.systemFont(ofSize: 35, weight: .bold)
-        label.textColor = .label
-        return label
-    }()
-    
-    lazy var titleBtnView: UIView = {
-        let v = UIView()
-        v.addSubview(addBtn)
-        v.addSubview(titleLabel)
-        return v
-    }()
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -69,19 +35,7 @@ class ViewController: UIViewController {
             self.tableView.reloadData()
         }
     }
-<<<<<<< HEAD
-    
-//    func setNav() {
-//        let appearance = UINavigationBarAppearance()
-//        appearance.configureWithTransparentBackground()
-//
-//        navigationController?.navigationBar.tintColor = .black
-//        navigationController?.navigationBar.prefersLargeTitles = true
-//        title = DailyDo.title
-//
-//        navigationItem.rightBarButtonItem = self.addBtn
-//    }
-=======
+
     //MARK: NavigationController Setting
     func setNav() {
         let appearance = UINavigationBarAppearance()
@@ -93,7 +47,6 @@ class ViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = self.addBtn
     }
->>>>>>> presentPush
     
     func setTableView() {
         tableView.dataSource = self

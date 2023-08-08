@@ -29,14 +29,6 @@ class AddAlarmVC: UIViewController {
     var firstTime: Date?
     var secondTime: Date?
     
-<<<<<<< HEAD
-    //    lazy var firstTime = UIDatePicker()
-    
-    
-    
-    
-=======
->>>>>>> presentPush
     lazy var alarmTextView: UITextView = {
         let textView = UITextView()
         textView.backgroundColor = .secondarySystemBackground
@@ -57,37 +49,6 @@ class AddAlarmVC: UIViewController {
         return pv
     }()
     
-<<<<<<< HEAD
-//    lazy var cancelBtn: UIButton = {
-//
-//        var attrStr = AttributedString.init(AddAlram.cancel)
-//        attrStr.font = .systemFont(ofSize: 18)
-//        attrStr.foregroundColor = .systemBlue
-//
-//        var btnConf = UIButton.Configuration.plain()
-//        btnConf.attributedTitle = attrStr
-//
-//        let btn = UIButton(configuration: btnConf)
-//
-//        return btn
-//    }()
-//
-//    lazy var saveBtn: UIButton = {
-//        var attrStr = AttributedString.init(AddAlram.add)
-//        attrStr.font = .systemFont(ofSize: 18, weight: .semibold)
-//        attrStr.foregroundColor = .systemBlue
-//
-//        var btnConf = UIButton.Configuration.plain()
-//        btnConf.attributedTitle = attrStr
-//
-//        let btn = UIButton(configuration: btnConf)
-//        btn.addTarget(self, action: #selector(saveBtnHit(_:)), for: .touchUpInside)
-//        return btn
-//    }()
-    
-    lazy var saveBtn: UIBarButtonItem = {
-        let btn = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(saveBtnHit(_:)))
-=======
     lazy var saveBtn: UIBarButtonItem = {
         let btn = UIBarButtonItem(title: AddAlram.add, style: .plain, target: self, action: #selector(saveBtnHit(_:)))
         btn.tintColor = .subLabelColour
@@ -97,7 +58,6 @@ class AddAlarmVC: UIViewController {
     lazy var cancelBtn: UIBarButtonItem = {
         let btn = UIBarButtonItem(title: AddAlram.cancel, style: .plain, target: self, action: #selector(cancelBtnHit))
         btn.tintColor = .subLabelColour
->>>>>>> presentPush
         return btn
     }()
     
@@ -117,27 +77,7 @@ class AddAlarmVC: UIViewController {
         sv.spacing = 30
         return sv
     }()
-<<<<<<< HEAD
     
-    lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = AddAlram.addAlarm
-        label.textColor = .label
-        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        return label
-    }()
-    
-//    lazy var titleAndBtnView: UIView = {
-//        let view = UIView()
-//        view.addSubview(cancelBtn)
-//        view.addSubview(titleLabel)
-//        view.addSubview(saveBtn)
-//        return view
-//    }()
-    
-=======
-        
->>>>>>> presentPush
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.post(name: NSNotification.Name(Nfcentre.name), object: nil)
@@ -149,10 +89,6 @@ class AddAlarmVC: UIViewController {
         tableView.delegate = self
         
         view.backgroundColor = .systemBackground
-<<<<<<< HEAD
-        //        setTableView()
-=======
->>>>>>> presentPush
         setLayout()
         refresh()
         setNav()
@@ -179,20 +115,15 @@ class AddAlarmVC: UIViewController {
             }
         }
     }
-<<<<<<< HEAD
-    //MARK: NavigationController setting
-=======
     @objc func cancelBtnHit() {
         self.dismiss(animated: true)
     }
     
     //MARK: NavigationController Setting
->>>>>>> presentPush
     func setNav() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
         
-<<<<<<< HEAD
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.prefersLargeTitles = true
         title = DailyDo.addAlarmVCTitle
@@ -209,7 +140,6 @@ class AddAlarmVC: UIViewController {
             
         ]
         self.tableView.reloadData()
-=======
         navigationController?.navigationBar.tintColor = .subLabelColour
         navigationController?.navigationBar.prefersLargeTitles = false
         title = AddAlram.title
@@ -218,51 +148,9 @@ class AddAlarmVC: UIViewController {
         navigationItem.leftBarButtonItem = self.cancelBtn
     }
     
-    
-    //MARK: TableView data setting
-    private func refresh() {
-      self.dataSource = [
-        .setCycle(leftLabel: AddAlram.cycleTerm, rightLabel: CycleText.days[Int(cycle)]),
-        .setTime(leftLabel: AddAlram.cellLeftLabel[0]),
-        .setTime(leftLabel: AddAlram.cellLeftLabel[0])
-    
-      ]
-      self.tableView.reloadData()
->>>>>>> presentPush
-    }
-    
     //MARK: Layout setting
     func setLayout() {
         view.addSubview(tfAndPvSV)
-<<<<<<< HEAD
-//        view.addSubview(titleAndBtnView)
-        view.addSubview(testBtn)
-        
-        
-//        titleAndBtnView.snp.makeConstraints {
-//            $0.top.equalToSuperview().offset(15)
-//            $0.leading.equalToSuperview().offset(10)
-//            $0.trailing.equalToSuperview().offset(-10)
-//            $0.height.equalTo(cancelBtn.snp.height)
-//        }
-//
-//        cancelBtn.snp.makeConstraints {
-//            $0.top.equalToSuperview()
-//            $0.leading.equalToSuperview()
-//        }
-//
-//        saveBtn.snp.makeConstraints {
-//            $0.top.equalToSuperview()
-//            $0.trailing.equalToSuperview()
-//        }
-        
-        titleLabel.snp.makeConstraints {
-            $0.center.equalToSuperview()
-        }
-        
-=======
-
->>>>>>> presentPush
         alarmTextView.snp.makeConstraints {
             $0.height.equalTo(150)
         }
@@ -271,21 +159,11 @@ class AddAlarmVC: UIViewController {
             $0.height.equalTo(119)
         }
         
-<<<<<<< HEAD
-//        tfAndPvSV.snp.makeConstraints {
-//            $0.top.equalTo(cancelBtn.snp.bottom).offset(40)
-//            $0.leading.equalToSuperview().offset(20)
-//            $0.trailing.equalToSuperview().offset(-20)
-//        }
-//
-=======
         tfAndPvSV.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(40)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
         }
-        
->>>>>>> presentPush
         tableView.snp.makeConstraints {
             $0.edges.equalTo(setTimeView)
         }
