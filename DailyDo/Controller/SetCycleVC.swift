@@ -13,6 +13,8 @@ class SetCycleVC: UIViewController {
         
     var delegate: UpdateCycle?
     
+    var cycleIndex: Int16 = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -27,6 +29,7 @@ class SetCycleVC: UIViewController {
         tableView.delegate = self
         tableView.layer.masksToBounds = true
         tableView.layer.cornerRadius = 10
+        tableView.isScrollEnabled = false
         
         
         tableView.register(CycleCell.self, forCellReuseIdentifier: CellIdentifier.cycle)
@@ -64,7 +67,9 @@ extension SetCycleVC: UITableViewDelegate {
                 tableView.cellForRow(at: cellPath)!.accessoryType = .none
             }
         }
-        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
         
     }
     
@@ -77,9 +82,11 @@ extension SetCycleVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier.cycle, for: indexPath) as! CycleCell
-//        cell.cycleLabel.text = cycle[indexPath.row]
         cell.cycleLabel.text = CycleText.days[indexPath.row]
-        cell.accessoryType = cell.isSelected ? .checkmark : .none
+        if cycleIndex == Int16(indexPath.row) {
+            cell.accessoryType = .checkmark
+        }
+        
         return cell
     }
     

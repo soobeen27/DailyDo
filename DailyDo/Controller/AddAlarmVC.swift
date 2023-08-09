@@ -15,6 +15,7 @@ class AddAlarmVC: UIViewController {
         tableView.rowHeight = 40
         tableView.register(SetCycleCell.self, forCellReuseIdentifier: CellIdentifier.setCycle)
         tableView.register(SetTimeCell.self, forCellReuseIdentifier: CellIdentifier.setTime)
+        tableView.isScrollEnabled = false
         return tableView
     }()
     
@@ -175,7 +176,11 @@ extension AddAlarmVC: UITableViewDelegate {
         if indexPath.row == 0 {
             let vc = SetCycleVC()
             vc.delegate = self
+            vc.cycleIndex = self.cycle
             navigationController?.pushViewController(vc, animated: true)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
         }
     }
 }
