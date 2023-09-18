@@ -36,6 +36,7 @@
 		F4DB6B072A6FF6E3001556D7 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB6B062A6FF6E3001556D7 /* extensions.swift */; };
 		F4DB6B092A7016C1001556D7 /* CustomDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB6B082A7016C1001556D7 /* CustomDelegates.swift */; };
 		F4DB6B0B2A702615001556D7 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DB6B0A2A702615001556D7 /* Colors.swift */; };
+		F4DF987B2A98ADFC009B9B82 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF987A2A98ADFC009B9B82 /* NotificationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		F4DB6B062A6FF6E3001556D7 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		F4DB6B082A7016C1001556D7 /* CustomDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDelegates.swift; sourceTree = "<group>"; };
 		F4DB6B0A2A702615001556D7 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		F4DF987A2A98ADFC009B9B82 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +209,7 @@
 				F435C3B32A66ADF400780BF8 /* MemoEntity+CoreDataClass.swift */,
 				F435C3B42A66ADF400780BF8 /* MemoEntity+CoreDataProperties.swift */,
 				F435C3A72A559ECB00780BF8 /* CoreDataManager.swift */,
+				F4DF987A2A98ADFC009B9B82 /* NotificationManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				F4DB6B052A696843001556D7 /* CellModel.swift in Sources */,
 				F4DB6B072A6FF6E3001556D7 /* extensions.swift in Sources */,
 				F435C3B82A66ADF400780BF8 /* MemoEntity+CoreDataProperties.swift in Sources */,
+				F4DF987B2A98ADFC009B9B82 /* NotificationManager.swift in Sources */,
 				F4C490952A448D78009D6B74 /* CycleCell.swift in Sources */,
 				F435C3AB2A5C1A7C00780BF8 /* NameSpace.swift in Sources */,
 				F4C490882A408C6C009D6B74 /* AlarmListCell.swift in Sources */,

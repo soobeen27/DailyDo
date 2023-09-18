@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import UserNotifications
 
 class ViewController: UIViewController {
     
     let dataManager = CoreDataManager.shared
+    
+    let userNotificationCenter = UNUserNotificationCenter.current()
     
     private let tableView = UITableView()
     
@@ -34,11 +37,19 @@ class ViewController: UIViewController {
         )
         
     }
+    
+    
+   
+    
     @objc func didDismissDetailNotification(_ notification: Notification) {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
     }
+    
+    
+    
+    
     //MARK: NavigationController Setting
     func setNav() {
         let appearance = UINavigationBarAppearance()

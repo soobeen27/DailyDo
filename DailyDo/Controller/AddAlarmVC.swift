@@ -9,7 +9,6 @@ import UIKit
 
 class AddAlarmVC: UIViewController {
     
-//    private let tableView = UITableView()
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.rowHeight = 40

@@ -5,7 +5,6 @@
 //  Created by Soo Jang on 2023/07/18.
 //
 //
-
 import Foundation
 import CoreData
 
@@ -30,6 +29,11 @@ extension MemoEntity {
         guard let date = self.date else { return "" }
         let savedDateString = myFormatter.string(from: date)
         return savedDateString
+    }
+    
+    var identifier: URL {
+        let id = self.objectID.uriRepresentation()
+        return id
     }
 
 }
